@@ -1,4 +1,7 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template
+
+from ..server import app
+from ...models import Bolsistas
 
 
 bolsistas_routes_bp = Blueprint('bolsistas_routes', __name__)
