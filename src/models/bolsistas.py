@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 from sqlalchemy.orm import Mapped, mapped_column
 
 from ..main.server import app
@@ -12,7 +12,7 @@ class Bolsistas(app.db.Model):
     nome_mae: Mapped[str]
     pis_pasep: Mapped[str]
     rg: Mapped[str]
-    nascimento: Mapped[datetime]
+    nascimento: Mapped[date]
     dados_bancarios: Mapped[str]
     # endereco
     cep: Mapped[str]
