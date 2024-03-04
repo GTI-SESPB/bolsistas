@@ -1,0 +1,1 @@
+from .bolsistas_routes import bolsistas_routes_bp as bolsistas_routes_bp
