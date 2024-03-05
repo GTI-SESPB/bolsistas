@@ -12,6 +12,18 @@
           <th scope="col">Ações</th>
         </tr>
       </thead>
+      <tbody>
+        {% for bolsista in bolsistas %}
+        <tr>
+          <td scope="col">{{ bolsista.nome }}</td>
+          <td scope="col">{{ bolsista.cpf }}</td>
+          <td scope="col">
+            <a href="{{ url_for('bolsistas_routes.deletar', id=bolsista.id) }}">teste</a>
+            <a href="{{ url_for('bolsistas_routes.editar', id=bolsista.id) }}">editar</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
   </div>
 </table>

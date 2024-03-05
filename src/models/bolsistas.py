@@ -1,4 +1,6 @@
 from datetime import date
+from typing import Optional
+
 from sqlalchemy.orm import Mapped, mapped_column
 
 from ..main.server import app
@@ -19,5 +21,10 @@ class Bolsistas(app.db.Model):
     cidade: Mapped[str]
     logradouro: Mapped[str]
     numero: Mapped[str]
-    complemento: Mapped[str]
+    complemento: Mapped[Optional[str]]
+    #bolsa
+    modalidade: Mapped[str]
+    carga_horaria: Mapped[int]
+    cargo: Mapped[str]
+    valor: Mapped[float]
 
