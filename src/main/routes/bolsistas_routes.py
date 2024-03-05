@@ -1,55 +1,63 @@
 from datetime import datetime
 
 from flask import Blueprint, redirect, render_template, request, url_for
+from flask.views import MethodView
+from sqlalchemy import select, update, delete
 
 from ..database import db
 from ...models import Bolsistas
+from ..utils import class_route
 
 
-bolsistas_routes_bp = Blueprint('bolsistas_routes', __name__)
+bolsistas_bp = Blueprint('bolsistas', __name__)
 
 
-@bolsistas_routes_bp.get('/bolsistas')
-def lista_bolsistas():
-    bolsistas = db.session.execute(db.select(Bolsistas)).scalars()
-    return render_template('bolsistas/listar.html', bolsistas=bolsistas)
+@class_route(bolsistas_bp, '/bolsistas', 'listar')
+class Listar(MethodView):
+    def get(self):
+        bolsistas = db.session.execute(select(Bolsistas)).scalars()
+        return render_template('bolsistas/listar.html', bolsistas=bolsistas)
 
-@bolsistas_routes_bp.route('/bolsistas/adicionar', methods=['GET', 'POST'])
-def adicionar_bolsista():
-    if request.method == 'GET':
+
+@class_route(bolsistas_bp, '/bolsistas/adicionar', 'adicionar')
+class Adicionar(MethodView):
+    def get(self):
         return render_template('bolsistas/adicionar.html')
 
-    form = dict(request.form)
-    form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d')
-    bolsista = Bolsistas(**form)
-    db.session.add(bolsista)
-    db.session.commit()
-    return redirect(url_for('bolsistas_routes.lista_bolsistas'))
+    def post(self):
+        form = dict(request.form)
+        form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d')
+        bolsista = Bolsistas(**form)
+        db.session.add(bolsista)
+        db.session.commit()
+        return redirect(url_for('bolsistas.listar'))
 
-@bolsistas_routes_bp.route('/bolsistas/editar/<int:id>', methods=['GET', 'PUT'])
-def editar(id: int):
-    if request.method == 'GET':
-        bolsista = db.session.execute(db.select(Bolsistas).where(Bolsistas.id == id)).scalar()
+
+@class_route(bolsistas_bp, '/bolsistas/editar/<int:id>', 'editar')
+class Editar(MethodView):
+    def get(self, id: int):
+        bolsista = db.session.execute(
+            select(Bolsistas).where(Bolsistas.id == id)
+        ).scalar()
         return render_template('bolsistas/editar.html', bolsista=bolsista)
 
-    form = dict(request.form)
-    form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d')
-    db.session.execute(
-        db.update(Bolsistas).where(Bolsistas.id == id).valus(**form)
-    )
-    db.session.commit()
-    return redirect(url_for('bolsistas_routes.lista_bolsistas'))
-
-@bolsistas_routes_bp.get('/bolsistas/deletar/<int:id>')
-def deletar(id: int):
-    db.session.execute(
-        db.delete(Bolsistas).where(Bolsistas.id == id)
-    )
-    db.session.commit()
-    return redirect(url_for('bolsistas_routes.lista_bolsistas'))
-
-@bolsistas_routes_bp.get('/')
-def home():
-    return redirect(url_for('bolsistas_routes.lista_bolsistas'))
+    def put(self, id: int):
+        form = dict(request.form)
+        form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d')
+        db.session.execute(update(Bolsistas).where(Bolsistas.id == id).values(**form))
+        db.session.commit()
+        return redirect(url_for('bolsistas_routes.lista_bolsistas'))
 
 
+@class_route(bolsistas_bp, '/bolsistas/deletar/<int:id>', 'deletar')
+class Deletar(MethodView):
+    def delete(self, id: int):
+        db.session.execute(delete(Bolsistas).where(Bolsistas.id == id))
+        db.session.commit()
+        return redirect(url_for('bolsistas_routes.lista_bolsistas'))
+
+
+@class_route(bolsistas_bp, '/', 'home')
+class Home(MethodView):
+    def get(self):
+        return redirect(url_for('bolsistas_routes.lista_bolsistas'))
