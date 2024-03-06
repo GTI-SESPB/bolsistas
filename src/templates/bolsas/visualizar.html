@@ -1,41 +1,37 @@
 {% extends 'base.html' %}
 
-{% block title %}Adicionar bolsa{% endblock title %}
+{% block title %}Visualizar bolsa{% endblock title %}
 
 {% block content %}
 <div class="my-4">
-  <h1>Adicionar bolsa</h1>
+  <h1>Visualizar bolsa</h1>
 </div>
-<form action='{{ url_for("bolsas.adicionar") }}' method="post">
+<div>
   <!-- Dados pessoais -->
   <hr>
   <div class="container-fluid my-4">
     <div class="row mt-2">
       <div class="col">
         <label for="modalidade" class="form-label">Modalidade</label>
-        <input type="text" name="modalidade" class="form-control" required>
+        <input type="text" name="modalidade" class="form-control" value="{{ bolsa.modalidade }}" disabled readonly>
       </div>
       <div class="col">
         <label for="cargo" class="form-label">Cargo</label>
-        <input type="text" name="cargo" class="form-control" required>
+        <input type="text" name="cargo" class="form-control" value="{{ bolsa.cargo }}" disabled readonly>
       </div>
       <div class="col col-2">
         <label for="carga_horaria" class="form-label">Carga horária</label>
-        <input type="number" name="carga_horaria" class="form-control" required>
+        <input type="number" name="carga_horaria" class="form-control" value="{{ bolsa.carga_horaria }}" disabled readonly>
       </div>
     </div>
     <div class="row mt-2">
       <div class="col col-3">
         <label for="valor" class="form-label">Valor</label>
-        <input type="number" name="valor" class="form-control" required>
+        <input type="number" name="valor" class="form-control" value="{{ bolsa.valor }}" disabled readonly>
       </div>
       <div class="col col-3">
         <label for="edital_id" class="form-label">Edital</label> 
-        <select class="form-select" name="edital_id">
-          <option value="#" selected disabled>Selecionar...</option>
-          {% for edital in editais %}
-          <option value="{{ edital.id }}">{{ edital.numero }}</option>
-          {% endfor %}
+        <input type="text" name="edital_id" class="form-control" value="{{ bolsa.edital.numero }}" disabled readonly>
         </select>
       </div>
     </div>
@@ -44,9 +40,16 @@
   <div class="container-fluid mt-4">
     <div class="row justify-content-md-center">
       <div class="col col-2 d-grid">
-        <button type="submit" class="btn btn-primary btn-adicionar">Salvar</button>
+        <a href="#" class="btn btn-primary">
+          Editar Edital
+        </a>
+      </div>
+      <div class="col col-2 d-grid">
+        <a href="#" class="btn btn-danger">
+          Deletar Edital
+        </a>
       </div>
     </div>
   </div>
-</form> 
+</div> 
 {% endblock content %}
