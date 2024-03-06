@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask import Blueprint, redirect, render_template, request, url_for
 from flask.views import MethodView
-from sqlalchemy import select, update, delete
+from sqlalchemy import select, update
 
 from ..database import db
 from ..models import Bolsista
@@ -65,7 +65,7 @@ class Editar(MethodView):
 class Deletar(MethodView):
     def get(self, id: int):
         dado_foi_deletado(db.session.execute(select(Bolsista).where(Bolsista.id == id)).scalar())       
-        db.session.execute(delete(Bolsista).where(Bolsista.id == id))
+        db.session.execute(update(Bolsista).where(Bolsista.id == id).values(data_deletado=datetime.utcnow()))
         db.session.commit()
         return redirect(url_for('bolsistas.listar'))
 
