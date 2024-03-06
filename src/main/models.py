@@ -27,6 +27,14 @@ class Bolsista(db.Model):
     complemento: Mapped[Optional[str]]
     bolsas: Mapped[List["RelacaoBolsaBolsista"]] = relationship(back_populates="bolsista")
 
+    @property
+    def bolsa_ativa(self) -> bool:
+        for bolsa in self.bolsas:
+            if bolsa.ativa:
+                return True
+
+        return False
+
 
 class RelacaoBolsaBolsista(db.Model):
     __tablename__ = "rl_bolsa_bolsista"

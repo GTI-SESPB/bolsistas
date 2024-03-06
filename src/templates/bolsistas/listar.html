@@ -1,25 +1,30 @@
 {% extends 'base.html' %}
 
+{% block title %}Lista de bolsistas{% endblock title %}
+
 {% block content %}
 <table class="table table-striped">
   <div class="d-flex flex-row-reverse mt-3">
     <a href="{{ url_for('bolsistas.adicionar') }}" class="btn btn-primary" >Adicionar</a>
-    <table class="table table-striped">
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
           <th scope="col">NOME</th>
           <th scope="col">CPF</th>
-          <th scope="col">Ações</th>
+          <th scope="col">BOLSA ATIVA</th>
         </tr>
       </thead>
       <tbody>
         {% for bolsista in bolsistas %}
-        <tr>
+        <tr style="cursor: pointer;" onclick="visualizarBolsista('{{ url_for("bolsistas.visualizar", id=bolsista.id) }}')">
           <td scope="col">{{ bolsista.nome }}</td>
           <td scope="col">{{ bolsista.cpf }}</td>
           <td scope="col">
-            <a href="{{ url_for('bolsistas.deletar', id=bolsista.id) }}">teste</a>
-            <a href="{{ url_for('bolsistas.editar', id=bolsista.id) }}">editar</a>
+            {% if bolsista.bolsa_ativa %}
+              SIM
+            {% else %}
+              NÃO
+            {% endif %}
           </td>
         </tr>
         {% endfor %}
@@ -28,3 +33,11 @@
   </div>
 </table>
 {% endblock content %}
+
+{% block scripts %}
+<script>
+function visualizarBolsista(url) {
+  window.location = url
+}
+</script>
+{% endblock scripts %}

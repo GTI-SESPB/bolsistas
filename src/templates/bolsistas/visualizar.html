@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Editar bolsista{% endblock title %}
+{% block title %}Visualizar bolsista{% endblock title %}
 
 {% block content %}
 <div class="my-4">
-  <h1>Editar bolsista</h1>
+  <h1>Visualizar bolsista</h1>
 </div>
-<form action='{{ url_for("bolsistas.editar", id=bolsista.id) }}' method="put">
+<div class="mb-5">
   <!-- Dados pessoais -->
   <div>
     <p>Dados pessoais</p>
@@ -16,41 +16,41 @@
     <div class="row">
       <div class="col">
         <label for="nome" class="form-label">Nome</label> 
-        <input type="text" name="nome" class="form-control" value="{{ bolsista.nome }}" required>
+        <input type="text" name="nome" class="form-control" value="{{ bolsista.nome }}" disabled readonly>
       </div>
       <div class="col col-4">
         <label for="email" class="form-label">E-mail</label> 
-        <input type="email" name="email" class="form-control" value="{{ bolsista.email }}" required>
+        <input type="email" name="email" class="form-control" value="{{ bolsista.email }}" disabled readonly>
       </div>
     </div>
     <div class="row mt-2">
       <div class="col">
         <label for="nome_mae" class="form-label">Nome da mãe</label> 
-        <input type="text" name="nome_mae" class="form-control" value="{{ bolsista.nome_mae }}"required>
+        <input type="text" name="nome_mae" class="form-control" value="{{ bolsista.nome_mae }}" disabled readonly>
       </div>
       <div class="col col-4">
         <label for="nascimento" class="form-label">Data de nascimento</label> 
-        <input type="date" name="nascimento" class="form-control" value="{{ bolsista.nascimento }}"required>
+        <input type="date" name="nascimento" class="form-control" value="{{ bolsista.nascimento }}" disabled readonly>
       </div>
     </div>
     <div class="row mt-2">
       <div class="col">
         <label for="rg" class="form-label">RG</label>
-        <input type="text" name="rg" class="form-control" value="{{ bolsista.rg }}"required>
+        <input type="text" name="rg" class="form-control" value="{{ bolsista.rg }}" disabled readonly>
       </div>
       <div class="col">
         <label for="cpf" class="form-label">CPF</label> 
-        <input type="text" name="cpf" class="form-control" value="{{ bolsista.cpf }}" required>
+        <input type="text" name="cpf" class="form-control" value="{{ bolsista.cpf }}" disabled readonly>
       </div>
       <div class="col">
         <label for="pis_pasep" class="form-label">PIS/PASEP</label>
-        <input type="text" name="pis_pasep" class="form-control" value="{{ bolsista.pis_pasep }}" required>
+        <input type="text" name="pis_pasep" class="form-control" value="{{ bolsista.pis_pasep }}" disabled readonly>
       </div>
     </div>
     <div class="row mt-3">
       <div class="col col-5">
         <label for="dados_bancarios" class="form-label">Dados Bancários</label>
-        <input type="text" name="dados_bancarios" class="form-control" value="{{ bolsista.dados_bancarios }}" required>
+        <input type="text" name="dados_bancarios" class="form-control" value="{{ bolsista.dados_bancarios }}" disabled readonly>
       </div>  
     </div>
   </div>
@@ -61,25 +61,25 @@
     <div class="row mt-2">
       <div class="col col-3">
         <label for="cep" class="form-label">CEP</label> 
-        <input type="text" name="cep" class="form-control" value="{{ bolsista.cep }}" required>
+        <input type="text" name="cep" class="form-control" value="{{ bolsista.cep }}" disabled readonly>
       </div>
       <div class="col">
         <label for="logradouro" class="form-label">Logradouro</label>
-        <input type="text" name="logradouro" class="form-control" value="{{ bolsista.logradouro }}" required>
+        <input type="text" name="logradouro" class="form-control" value="{{ bolsista.logradouro }}" disabled readonly>
       </div>
     </div>
     <div class="row mt-2">
       <div class="col">
         <label for="numero" class="form-label">Número</label>
-        <input type="number" name="numero" class="form-control" value="{{ bolsista.numero }}" required>
+        <input type="number" name="numero" class="form-control" value="{{ bolsista.numero }}" disabled readonly>
       </div>
       <div class="col">
         <label for="cidade" class="form-label">Cidade</label>
-        <input type="text" name="cidade" class="form-control" value="{{ bolsista.cidade }}" required>
+        <input type="text" name="cidade" class="form-control" value="{{ bolsista.cidade }}" disabled readonly>
       </div>
       <div class="col">
         <label for="complemento" class="form-label">Complemento(Opcional)</label>
-        <input type="text" name="complemento" class="form-control" value="{{ bolsista.complemento }}">
+        <input type="text" name="complemento" class="form-control" value="{{ bolsista.complemento }}" disabled readonly>
       </div>
     </div>
   </div>
@@ -87,14 +87,18 @@
   <div class="container-fluid mt-4">
     <div class="row justify-content-md-center">
       <div class="col col-2 d-grid">
-        <a href="{{ url_for('bolsistas.visualizar', id=bolsista.id) }}" class="btn btn-secondary">
-          Cancelar
+        <a href="{{ url_for('bolsistas.editar', id=bolsista.id) }}" class="btn btn-primary">
+          Editar Bolsista
         </a>
       </div>
       <div class="col col-2 d-grid">
-        <button type="submit" class="btn btn-primary btn-adicionar">Salvar</button>
-      </div>
+        <!-- <a href="{{ url_for('bolsistas.editar', id=bolsista.id) }}" class="btn btn-danger"> -->
+        <a href="#" class="btn btn-danger">
+          Deletar Bolsista
+        </a>
+      </div> 
     </div>
   </div>
-</form> 
+</div> 
+<h2>Histórico de bolsas</h2>
 {% endblock content %}

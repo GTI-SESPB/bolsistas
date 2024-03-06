@@ -30,7 +30,16 @@ class Adicionar(MethodView):
         bolsista = Bolsista(**form)
         db.session.add(bolsista)
         db.session.commit()
-        return redirect(url_for('bolsistas.listar'))
+        return redirect(url_for('bolsistas.visualizar', id=bolsista.id))
+
+
+@class_route(bolsistas_bp, '/bolsistas/visualizar/<int:id>', 'visualizar')
+class Visualizar(MethodView):
+    def get(self, id: int):
+        bolsista = db.session.execute(
+            select(Bolsista).where(Bolsista.id == id)
+        ).scalar()
+        return render_template('bolsistas/visualizar.html', bolsista=bolsista)
 
 
 @class_route(bolsistas_bp, '/bolsistas/editar/<int:id>', 'editar')
@@ -46,7 +55,7 @@ class Editar(MethodView):
         form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d')
         db.session.execute(update(Bolsista).where(Bolsista.id == id).values(**form))
         db.session.commit()
-        return redirect(url_for('bolsistas.listar'))
+        return redirect(url_for('bolsistas.visualizar', id=form['id']))
 
 
 @class_route(bolsistas_bp, '/bolsistas/deletar/<int:id>', 'deletar')
