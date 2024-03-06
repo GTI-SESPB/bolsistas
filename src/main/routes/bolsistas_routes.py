@@ -46,7 +46,7 @@ class Editar(MethodView):
         form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d')
         db.session.execute(update(Bolsistas).where(Bolsistas.id == id).values(**form))
         db.session.commit()
-        return redirect(url_for('bolsistas_routes.lista_bolsistas'))
+        return redirect(url_for('bolsistas.listar'))
 
 
 @class_route(bolsistas_bp, '/bolsistas/deletar/<int:id>', 'deletar')
@@ -54,10 +54,10 @@ class Deletar(MethodView):
     def delete(self, id: int):
         db.session.execute(delete(Bolsistas).where(Bolsistas.id == id))
         db.session.commit()
-        return redirect(url_for('bolsistas_routes.lista_bolsistas'))
+        return redirect(url_for('bolsistas.listar'))
 
 
 @class_route(bolsistas_bp, '/', 'home')
 class Home(MethodView):
     def get(self):
-        return redirect(url_for('bolsistas_routes.lista_bolsistas'))
+        return redirect(url_for('bolsistas.listar'))

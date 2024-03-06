@@ -3,7 +3,7 @@
 {% block content %}
 <table class="table table-striped">
   <div class="d-flex flex-row-reverse mt-3">
-    <a href="{{ url_for('bolsistas_routes.adicionar_bolsista') }}" class="btn btn-primary" >Adicionar</a>
+    <a href="{{ url_for('bolsistas.adicionar') }}" class="btn btn-primary" >Adicionar</a>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -18,8 +18,8 @@
           <td scope="col">{{ bolsista.nome }}</td>
           <td scope="col">{{ bolsista.cpf }}</td>
           <td scope="col">
-            <a href="{{ url_for('bolsistas_routes.deletar', id=bolsista.id) }}">teste</a>
-            <a href="{{ url_for('bolsistas_routes.editar', id=bolsista.id) }}">editar</a>
+            <a href="{{ url_for('bolsistas.deletar', id=bolsista.id) }}">teste</a>
+            <a href="{{ url_for('bolsistas.editar', id=bolsista.id) }}">editar</a>
           </td>
         </tr>
         {% endfor %}
