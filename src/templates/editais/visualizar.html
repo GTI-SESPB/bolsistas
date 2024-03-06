@@ -40,11 +40,30 @@
         </a>
       </div>
       <div class="col col-2 d-grid">
-        <a href="#" class="btn btn-danger">
-          Deletar Edital
-        </a>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+          Apagar Edital
+        </button>
       </div>
     </div>
   </div>
 </div> 
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Apagar Edital</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja apagar este edital?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancelar</button>
+        <a href="{{ url_for('editais.deletar', id=edital.id) }}">
+          <button type="button" class="btn btn-danger">Apagar</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}
