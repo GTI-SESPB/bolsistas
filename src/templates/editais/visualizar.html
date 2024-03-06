@@ -13,21 +13,21 @@
     <div class="row mt-2">
       <div class="col">
         <label for="numero" class="form-label">Número</label>
-        <input type="text" name="numero" class="form-control" disabled readonly>
+        <input type="text" name="numero" class="form-control" value="{{ edital.numero }}" disabled readonly>
       </div>
       <div class="col">
         <label for="nucleo_responsavel" class="form-label">Núcleo Responsável</label>
-        <input type="text" name="nucleo_responsavel" class="form-control" disabled readonly>
+        <input type="text" name="nucleo_responsavel" class="form-control" value="{{ edital.nucleo_responsavel }}" disabled readonly>
       </div>
       <div class="col col-2">
         <label for="duracao" class="form-label">Duração</label>
-        <input type="text" name="duracao" class="form-control" disabled readonly>
+        <input type="text" name="duracao" class="form-control" value="{{ edital.duracao }}" disabled readonly>
       </div>
     </div>
     <div class="row mt-2">
       <div class="col col-3">
-        <label for="valor" class="form-label">Data assinatura</label>
-        <input type="date" name="valor" class="form-control" disabled readonly>
+        <label for="data_assinatura" class="form-label">Data assinatura</label>
+        <input type="date" name="data_assinatura" class="form-control" value="{{ edital.data_assinatura }}" disabled readonly>
       </div>
     </div>
   </div>
