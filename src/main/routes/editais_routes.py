@@ -2,11 +2,11 @@ from datetime import datetime
 
 from flask import Blueprint, render_template, url_for, redirect, request
 from flask.views import MethodView
-from sqlalchemy import select, update, delete
+from sqlalchemy import select, update
 
 from ..database import db
 from ..models import Edital
-from ..utils import class_route
+from ..utils import class_route, dado_foi_deletado
 
 
 editais_bp = Blueprint('editais', __name__)
@@ -15,7 +15,7 @@ editais_bp = Blueprint('editais', __name__)
 @class_route(editais_bp, '/editais', 'listar')
 class Listar(MethodView):
     def get(self):
-        editais = db.session.execute(select(Edital)).scalars()
+        editais = db.session.execute(select(Edital).where(Edital.data_deletado.is_(None))).scalars()
         return render_template('editais/listar.html', editais=editais)
 
 
@@ -38,6 +38,7 @@ class Visualizar(MethodView):
         edital = db.session.execute(
             select(Edital).where(Edital.id == id)
         ).scalar()
+        dado_foi_deletado(edital)
         return render_template('editais/visualizar.html', edital=edital)
 
 
@@ -47,11 +48,13 @@ class Editar(MethodView):
         edital = db.session.execute(
             select(Edital).where(Edital.id == id)
         ).scalar()
+        dado_foi_deletado(edital)
         return render_template('editais/editar.html', edital=edital)
 
     def post(self, id: int):
         form = dict(request.form)
         form['data_assinatura'] = datetime.strptime(form['data_assinatura'], '%Y-%m-%d')
+        dado_foi_deletado(db.session.execute(select(Edital).where(Edital.id == id)).scalar())
         db.session.execute(update(Edital).where(Edital.id == id).values(**form))
         db.session.commit()
         return redirect(url_for('editais.visualizar', id=id))
@@ -60,6 +63,9 @@ class Editar(MethodView):
 @class_route(editais_bp, '/editais/deletar/<int:id>', 'deletar')
 class Deletar(MethodView):
     def get(self, id: int):
-        db.session.execute(delete(Edital).where(Edital.id == id))
+        dado_foi_deletado(db.session.execute(select(Edital).where(Edital.id == id)).scalar())
+        db.session.execute(
+            update(Edital).where(Edital.id == id).values(data_deletado=datetime.utcnow())
+        )
         db.session.commit()
         return redirect(url_for('editais.listar'))

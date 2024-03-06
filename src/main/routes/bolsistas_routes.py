@@ -6,7 +6,7 @@ from sqlalchemy import select, update, delete
 
 from ..database import db
 from ..models import Bolsista
-from ..utils import class_route
+from ..utils import class_route, dado_foi_deletado
 
 
 bolsistas_bp = Blueprint('bolsistas', __name__)
@@ -15,7 +15,7 @@ bolsistas_bp = Blueprint('bolsistas', __name__)
 @class_route(bolsistas_bp, '/bolsistas', 'listar')
 class Listar(MethodView):
     def get(self):
-        bolsistas = db.session.execute(select(Bolsista)).scalars()
+        bolsistas = db.session.execute(select(Bolsista).where(Bolsista.data_deletado.is_(None))).scalars()
         return render_template('bolsistas/listar.html', bolsistas=bolsistas)
 
 
@@ -39,6 +39,7 @@ class Visualizar(MethodView):
         bolsista = db.session.execute(
             select(Bolsista).where(Bolsista.id == id)
         ).scalar()
+        dado_foi_deletado(bolsista)
         return render_template('bolsistas/visualizar.html', bolsista=bolsista)
 
 
@@ -48,11 +49,13 @@ class Editar(MethodView):
         bolsista = db.session.execute(
             select(Bolsista).where(Bolsista.id == id)
         ).scalar()
+        dado_foi_deletado(bolsista)
         return render_template('bolsistas/editar.html', bolsista=bolsista)
 
     def post(self, id: int):
         form = dict(request.form)
         form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d')
+        dado_foi_deletado(db.session.execute(select(Bolsista).where(Bolsista.id == id)).scalar())       
         db.session.execute(update(Bolsista).where(Bolsista.id == id).values(**form))
         db.session.commit()
         return redirect(url_for('bolsistas.visualizar', id=form['id']))
@@ -61,6 +64,7 @@ class Editar(MethodView):
 @class_route(bolsistas_bp, '/bolsistas/deletar/<int:id>', 'deletar')
 class Deletar(MethodView):
     def get(self, id: int):
+        dado_foi_deletado(db.session.execute(select(Bolsista).where(Bolsista.id == id)).scalar())       
         db.session.execute(delete(Bolsista).where(Bolsista.id == id))
         db.session.commit()
         return redirect(url_for('bolsistas.listar'))

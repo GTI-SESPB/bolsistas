@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from typing import Optional, List
 from sqlalchemy import ForeignKey
 
@@ -26,6 +26,7 @@ class Bolsista(db.Model):
     numero: Mapped[str]
     complemento: Mapped[Optional[str]]
     bolsas: Mapped[List["RelacaoBolsaBolsista"]] = relationship(back_populates="bolsista")
+    data_deletado: Mapped[Optional[datetime]]
 
     @property
     def bolsa_ativa(self) -> bool:
@@ -58,6 +59,7 @@ class Bolsa(db.Model):
     edital_id: Mapped[int] = mapped_column(ForeignKey("edital.id"))
     bolsistas: Mapped["RelacaoBolsaBolsista"] = relationship(back_populates="bolsa")
     edital: Mapped["Edital"] = relationship(back_populates="bolsas")
+    data_deletado: Mapped[Optional[datetime]]
     
 
 
@@ -70,3 +72,4 @@ class Edital(db.Model):
     duracao: Mapped[str]
     nucleo_responsavel: Mapped[str]
     bolsas: Mapped[List["Bolsa"]] = relationship(back_populates="edital")
+    data_deletado: Mapped[Optional[datetime]]
