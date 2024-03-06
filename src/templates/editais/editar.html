@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Adicionar Edital{% endblock title %}
+
+{% block content %}
+<div class="my-4">
+  <h1>Adicionar Edital</h1>
+</div>
+<form action='{{ url_for("editais.editar", id=edital.id) }}' method="put">
+  <!-- Dados pessoais -->
+  <hr>
+  <div class="container-fluid my-4">
+    <div class="row mt-2">
+      <div class="col">
+        <label for="numero" class="form-label">Número</label>
+        <input type="text" name="numero" class="form-control" value="{{ edital.numero }}" required>
+      </div>
+      <div class="col">
+        <label for="nucleo_responsavel" class="form-label">Núcleo Responsável</label>
+        <input type="text" name="nucleo_responsavel" class="form-control" value="{{ edital.nucleo_responsavel }}" required>
+      </div>
+      <div class="col col-2">
+        <label for="duracao" class="form-label">Duração</label>
+        <input type="text" name="duracao" class="form-control" value="{{ edital.duracao }}" required>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col col-3">
+        <label for="data_assinatura" class="form-label">Data assinatura</label>
+        <input type="date" name="data_assinatura" class="form-control" value="{{ edital.data_assinatura }}" required>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="container-fluid mt-4">
+    <div class="row justify-content-md-center">
+      <div class="col col-2 d-grid">
+        <a href="{{ url_for('editais.visualizar', id=edital.id) }}" class="btn btn-secondary">
+          Cancelar
+        </a>
+      </div>
+      <div class="col col-2 d-grid">
+        <button type="submit" class="btn btn-primary btn-adicionar">Salvar</button>
+      </div>
+    </div>
+  </div>
+</form> 
+{% endblock content %}

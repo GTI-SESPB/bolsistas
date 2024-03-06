@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Adicionar Edital{% endblock title %}
+
+{% block content %}
+<div class="my-4">
+  <h1>Adicionar Edital</h1>
+</div>
+<form action='{{ url_for("editais.adicionar") }}' method="post">
+  <!-- Dados pessoais -->
+  <hr>
+  <div class="container-fluid my-4">
+    <div class="row mt-2">
+      <div class="col">
+        <label for="numero" class="form-label">Número</label>
+        <input type="text" name="numero" class="form-control" required>
+      </div>
+      <div class="col">
+        <label for="nucleo_responsavel" class="form-label">Núcleo Responsável</label>
+        <input type="text" name="nucleo_responsavel" class="form-control" required>
+      </div>
+      <div class="col col-2">
+        <label for="duracao" class="form-label">Duração</label>
+        <input type="text" name="duracao" class="form-control" required>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col col-3">
+        <label for="data_assinatura" class="form-label">Data assinatura</label>
+        <input type="date" name="data_assinatura" class="form-control" required>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="container-fluid mt-4">
+    <div class="row justify-content-md-center">
+      <div class="col col-2 d-grid">
+        <button type="submit" class="btn btn-primary btn-adicionar">Salvar</button>
+      </div>
+    </div>
+  </div>
+</form> 
+{% endblock content %}
