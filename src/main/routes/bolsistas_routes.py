@@ -5,7 +5,7 @@ from flask.views import MethodView
 from sqlalchemy import select, update, delete
 
 from ..database import db
-from ...models import Bolsistas
+from ..models import Bolsista
 from ..utils import class_route
 
 
@@ -15,7 +15,7 @@ bolsistas_bp = Blueprint('bolsistas', __name__)
 @class_route(bolsistas_bp, '/bolsistas', 'listar')
 class Listar(MethodView):
     def get(self):
-        bolsistas = db.session.execute(select(Bolsistas)).scalars()
+        bolsistas = db.session.execute(select(Bolsista)).scalars()
         return render_template('bolsistas/listar.html', bolsistas=bolsistas)
 
 
@@ -27,7 +27,7 @@ class Adicionar(MethodView):
     def post(self):
         form = dict(request.form)
         form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d')
-        bolsista = Bolsistas(**form)
+        bolsista = Bolsista(**form)
         db.session.add(bolsista)
         db.session.commit()
         return redirect(url_for('bolsistas.listar'))
@@ -37,14 +37,14 @@ class Adicionar(MethodView):
 class Editar(MethodView):
     def get(self, id: int):
         bolsista = db.session.execute(
-            select(Bolsistas).where(Bolsistas.id == id)
+            select(Bolsista).where(Bolsista.id == id)
         ).scalar()
         return render_template('bolsistas/editar.html', bolsista=bolsista)
 
     def put(self, id: int):
         form = dict(request.form)
         form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d')
-        db.session.execute(update(Bolsistas).where(Bolsistas.id == id).values(**form))
+        db.session.execute(update(Bolsista).where(Bolsista.id == id).values(**form))
         db.session.commit()
         return redirect(url_for('bolsistas.listar'))
 
@@ -52,7 +52,7 @@ class Editar(MethodView):
 @class_route(bolsistas_bp, '/bolsistas/deletar/<int:id>', 'deletar')
 class Deletar(MethodView):
     def delete(self, id: int):
-        db.session.execute(delete(Bolsistas).where(Bolsistas.id == id))
+        db.session.execute(delete(Bolsista).where(Bolsista.id == id))
         db.session.commit()
         return redirect(url_for('bolsistas.listar'))
 

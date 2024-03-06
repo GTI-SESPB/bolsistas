@@ -1,2 +1,1 @@
-from .main.server import app as app
-from .models import *
+from .main import app as app
