@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask import Blueprint, render_template, url_for, redirect, request
 from flask.views import MethodView
-from sqlalchemy import select, update
+from sqlalchemy import select, update, delete
 
 from ..database import db
 from ..models import Edital
@@ -55,3 +55,11 @@ class Editar(MethodView):
         db.session.execute(update(Edital).where(Edital.id == id).values(**form))
         db.session.commit()
         return redirect(url_for('editais.visualizar', id=id))
+
+
+@class_route(editais_bp, '/editais/deletar/<int:id>', 'deletar')
+class Deletar(MethodView):
+    def get(self, id: int):
+        db.session.execute(delete(Edital).where(Edital.id == id))
+        db.session.commit()
+        return redirect(url_for('editais.listar'))
