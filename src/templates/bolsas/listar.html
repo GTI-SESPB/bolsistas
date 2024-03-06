@@ -15,7 +15,7 @@
       </thead>
       <tbody>
         {% for bolsa in bolsas %}
-        <tr style="cursor: pointer;" onclick="visualizar('{{ url_for("bolsas.visualizar", id=bolsa.id) }}')">
+        <tr style="cursor: pointer;" onclick="redirecionar('{{ url_for("bolsas.visualizar", id=bolsa.id) }}')">
           <td scope="col">{{ bolsa.modalidade }}</td>
           <td scope="col">{{ bolsa.cargo }}</td>
         </tr>
@@ -25,11 +25,3 @@
   </div>
 </table>
 {% endblock content %}
-
-{% block scripts %}
-<script>
-function visualizar(url) {
-  window.location = url
-}
-</script>
-{% endblock scripts %}

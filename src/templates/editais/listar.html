@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         {% for edital in editais %}
-        <tr style="cursor: pointer;" onclick="visualizar('{{ url_for("editais.visualizar", id=edital.id) }}')">
+        <tr style="cursor: pointer;" onclick="redirecionar('{{ url_for("editais.visualizar", id=edital.id) }}')">
           <td scope="col">{{ edital.numero }}</td>
           <td scope="col">{{ edital.data_assinatura }}</td>
           <td scope="col">{{ edital.nucleo_responsavel }}</td>
@@ -27,11 +27,3 @@
   </div>
 </table>
 {% endblock content %}
-
-{% block scripts %}
-<script>
-function visualizar(url) {
-  window.location = url
-}
-</script>
-{% endblock scripts %}

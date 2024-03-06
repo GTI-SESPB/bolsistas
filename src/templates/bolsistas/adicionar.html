@@ -36,15 +36,15 @@
     <div class="row mt-2">
       <div class="col">
         <label for="rg" class="form-label">RG</label>
-        <input type="text" name="rg" class="form-control" required>
+        <input type="text" name="rg" class="form-control" onkeyup="limitarANumeros(event)" required>
       </div>
       <div class="col">
         <label for="cpf" class="form-label">CPF</label> 
-        <input type="text" name="cpf" class="form-control" required>
+        <input type="text" name="cpf" class="form-control" maxlength="14" onkeyup="mascaraCPF(event)" required>
       </div>
       <div class="col">
         <label for="pis_pasep" class="form-label">PIS/PASEP</label>
-        <input type="text" name="pis_pasep" class="form-control" required>
+        <input type="text" name="pis_pasep" class="form-control" onkeyup="limitarANumeros(event)" required>
       </div>
     </div>
     <div class="row mt-3">
@@ -61,7 +61,7 @@
     <div class="row mt-2">
       <div class="col col-3">
         <label for="cep" class="form-label">CEP</label> 
-        <input type="text" name="cep" class="form-control" required>
+        <input type="text" name="cep" class="form-control" maxlength="9" onkeyup="mascaraCEP(event)" required>
       </div>
       <div class="col">
         <label for="logradouro" class="form-label">Logradouro</label>
@@ -71,7 +71,7 @@
     <div class="row mt-2">
       <div class="col">
         <label for="numero" class="form-label">Número</label>
-        <input type="number" name="numero" class="form-control" required>
+        <input type="text" name="numero" class="form-control" onkeyup="limitarANumeros(event)" required>
       </div>
       <div class="col">
         <label for="cidade" class="form-label">Cidade</label>
@@ -91,5 +91,6 @@
       </div>
     </div>
   </div>
-</form> 
+</form>
+<script src="{{ url_for('static', filename='js/bolsistas.js' ) }}"></script>
 {% endblock content %}
