@@ -49,7 +49,7 @@ class Editar(MethodView):
             select(Bolsa).where(Bolsa.id == id)
         ).scalar()
         dado_foi_deletado(bolsa)
-        editais = db.session.execute(select(Edital)).scalars()
+        editais = db.session.execute(select(Edital).where(Edital.data_deletado.is_(None))).scalars()
         return render_template('bolsas/editar.html', editais=editais, bolsa=bolsa)
 
     def post(self, id: int):
