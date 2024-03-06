@@ -50,7 +50,7 @@ class Editar(MethodView):
         ).scalar()
         return render_template('bolsistas/editar.html', bolsista=bolsista)
 
-    def put(self, id: int):
+    def post(self, id: int):
         form = dict(request.form)
         form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d')
         db.session.execute(update(Bolsista).where(Bolsista.id == id).values(**form))
@@ -60,7 +60,7 @@ class Editar(MethodView):
 
 @class_route(bolsistas_bp, '/bolsistas/deletar/<int:id>', 'deletar')
 class Deletar(MethodView):
-    def delete(self, id: int):
+    def get(self, id: int):
         db.session.execute(delete(Bolsista).where(Bolsista.id == id))
         db.session.commit()
         return redirect(url_for('bolsistas.listar'))

@@ -49,9 +49,9 @@ class Editar(MethodView):
         ).scalar()
         return render_template('editais/editar.html', edital=edital)
 
-    def put(self, id: int):
+    def post(self, id: int):
         form = dict(request.form)
         form['data_assinatura'] = datetime.strptime(form['data_assinatura'], '%Y-%m-%d')
         db.session.execute(update(Edital).where(Edital.id == id).values(**form))
         db.session.commit()
-        return redirect(url_for('editais.visualizar', id=form['id']))
+        return redirect(url_for('editais.visualizar', id=id))
