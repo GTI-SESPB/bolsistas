@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}Adicionar Edital{% endblock title %}
+{% block title %}Editar Edital{% endblock title %}
 
 {% block content %}
 <div class="my-4">
-  <h1>Adicionar Edital</h1>
+  <h1>Editar Edital</h1>
 </div>
 <form action='{{ url_for("editais.editar", id=edital.id) }}' method="put">
   <!-- Dados pessoais -->
