@@ -33,7 +33,7 @@ class RelacaoBolsaBolsista(db.Model):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     bolsista_id: Mapped[int] = mapped_column(ForeignKey("bolsista.id"))
-    bolsa_id: Mapped[int] = mapped_column(ForeignKey("bolsista.id"))
+    bolsa_id: Mapped[int] = mapped_column(ForeignKey("bolsa.id"))
     ativa: Mapped[bool] = mapped_column(default=True)
     bolsista: Mapped["Bolsista"] = relationship(back_populates="bolsas")
     bolsa: Mapped["Bolsa"] = relationship(back_populates="bolsistas")
