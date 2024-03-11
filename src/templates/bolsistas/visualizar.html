@@ -135,6 +135,26 @@
 </div>
 <div class="mt-5">
   <h2>Histórico de bolsas</h2>
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th scope="col">MODALIDADE</th>
+        <th scope="col">CARGO</th>
+        <th scope="col">ATIVO</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for bolsa in bolsas %}
+      <tr>
+        <td scope="col">{{ bolsa.bolsa.modalidade }}</td>
+        <td scope="col">{{ bolsa.bolsa.cargo }}</td>
+        <td scope="col">
+          {% if bolsa.ativa %}sim{% else %}não{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 <!-- dados da bolsa -->
 {% endblock content %}
