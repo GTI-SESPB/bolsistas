@@ -63,7 +63,7 @@ class Bolsa(db.Model):
     cargo: Mapped[str]
     valor: Mapped[float]
     edital_id: Mapped[int] = mapped_column(ForeignKey("edital.id"))
-    bolsistas: Mapped["RelacaoBolsaBolsista"] = relationship(back_populates="bolsa")
+    bolsistas: Mapped[List["RelacaoBolsaBolsista"]] = relationship(back_populates="bolsa")
     edital: Mapped["Edital"] = relationship(back_populates="bolsas")
     data_deletado: Mapped[Optional[datetime]]
 
