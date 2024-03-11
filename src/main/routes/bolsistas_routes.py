@@ -26,7 +26,7 @@ class Adicionar(MethodView):
 
     def post(self):
         form = dict(request.form)
-        form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d')
+        form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d') # type: ignore
         bolsista = Bolsista(**form)
         db.session.add(bolsista)
         db.session.commit()
@@ -54,7 +54,7 @@ class Editar(MethodView):
 
     def post(self, id: int):
         form = dict(request.form)
-        form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d')
+        form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d') # type: ignore
         dado_foi_deletado(db.session.execute(select(Bolsista).where(Bolsista.id == id)).scalar())       
         db.session.execute(update(Bolsista).where(Bolsista.id == id).values(**form))
         db.session.commit()
