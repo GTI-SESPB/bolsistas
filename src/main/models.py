@@ -11,8 +11,8 @@ class Bolsista(db.Model):
     __tablename__ = "bolsista"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    cpf: Mapped[str] = mapped_column(unique=True)
-    email: Mapped[str] = mapped_column(unique=True)
+    cpf: Mapped[str]
+    email: Mapped[str]
     nome: Mapped[str]
     nome_mae: Mapped[str]
     pis_pasep: Mapped[str]
@@ -66,7 +66,6 @@ class Bolsa(db.Model):
     bolsistas: Mapped["RelacaoBolsaBolsista"] = relationship(back_populates="bolsa")
     edital: Mapped["Edital"] = relationship(back_populates="bolsas")
     data_deletado: Mapped[Optional[datetime]]
-    
 
 
 class Edital(db.Model):
