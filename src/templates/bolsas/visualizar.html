@@ -52,6 +52,27 @@
     </div>
   </div>
 </div>
+<div class="mt-5">
+  <h2>Bolsistas vinculados</h2>
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th scope="col">NOME</th>
+        <th scope="col">CPF</th>
+        <th scope="col">BOLSA ATIVA</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for bolsista in bolsa.bolsistas %}
+      <tr style="cursor: pointer;" onclick="redirecionar('{{ url_for("bolsistas.visualizar", id=bolsista.bolsista.id) }}')">
+        <td scope="col">{{ bolsista.bolsista.nome }}</td>
+        <td scope="col">{{ bolsista.bolsista.cpf }}</td>
+        <td scope="col">{{ bolsista.bolsista.bolsa_ativa }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
