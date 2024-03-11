@@ -6,7 +6,7 @@
 <div class="my-4">
   <h1>Visualizar bolsista</h1>
 </div>
-<div class="mb-5">
+<div>
   <!-- Dados pessoais -->
   <div>
     <p>Dados pessoais</p>
@@ -118,6 +118,23 @@
     </div>
   </div>
 </div>
+<div class="mt-5">
+  <h2>Situação</h2>
+  <div class="row mt-3">
+    <div class="col">
+      <p>
+        <span class="fw-bold">Ativo:</span> {% if bolsista.bolsa_ativa %}Sim{% else %}Não{% endif %}
+      </p>     
+    </div>
+    <div class="col">
+      <p>
+        <span class="fw-bold">Cargo:</span> {% if bolsista.bolsa_ativa %}{{ bolsista.bolsa_atual }}{% else %}-{% endif %}
+      </p>  
+    </div>
+  </div>
+</div>
+<div class="mt-5">
+  <h2>Histórico de bolsas</h2>
+</div>
 <!-- dados da bolsa -->
-<h2>Histórico de bolsas</h2>
 {% endblock content %}

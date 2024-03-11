@@ -36,6 +36,12 @@ class Bolsista(db.Model):
 
         return False
 
+    @property
+    def bolsa_atual(self):
+        for bolsa in self.bolsas:
+            if bolsa.ativa:
+                return bolsa.bolsa
+
 
 class RelacaoBolsaBolsista(db.Model):
     __tablename__ = "rl_bolsa_bolsista"
