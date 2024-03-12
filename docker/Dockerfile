@@ -18,5 +18,3 @@ WORKDIR /app
 
 COPY --from=instalador /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 COPY . .
-
-ENTRYPOINT ["sh", "start.sh"]

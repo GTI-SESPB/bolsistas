@@ -4,12 +4,15 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile
+    command: ["sh", "start.sh"]
     restart: on-failure
     ports:
       - "8000:8000"
     depends_on:
       db:
         condition: service_healthy
+    volumes:
+      - ./migrations/versions:/app/migrations/versions
 
   db:
     extends:
