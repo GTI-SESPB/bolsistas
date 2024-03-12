@@ -1,3 +1,4 @@
+from os import getenv
 from pathlib import Path
 
 from flask import Flask
@@ -13,7 +14,7 @@ app = Flask(
     static_folder=Path('./src/static').absolute()
 )
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql+psycopg://postgres:{getenv("PG_PASSWD", "postgres")}@db:5432/bolsistas'
 db.init_app(app)
 
 migrate = Migrate(app, db)
