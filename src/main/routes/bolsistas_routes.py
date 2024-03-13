@@ -69,7 +69,7 @@ class Editar(MethodView):
         dado_foi_deletado(db.session.execute(select(Bolsista).where(Bolsista.id == id)).scalar())
         db.session.execute(update(Bolsista).where(Bolsista.id == id).values(**form))
         db.session.commit()
-        return redirect(url_for('bolsistas.visualizar', id=form['id']))
+        return redirect(url_for('bolsistas.visualizar', id=id))
 
 
 @class_route(bolsistas_bp, '/bolsistas/deletar/<int:id>', 'deletar')
