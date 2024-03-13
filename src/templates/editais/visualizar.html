@@ -75,6 +75,7 @@
   <table class="table table-striped table-hover mt-4">
     <thead>
       <tr>
+        <th scope="col">NOME</th>
         <th scope="col">MODALIDADE</th>
         <th scope="col">CARGO</th>
       </tr>
@@ -82,6 +83,7 @@
     <tbody>
       {% for bolsa in edital.bolsas %}
       <tr style="cursor: pointer;" onclick="redirecionar('{{ url_for("bolsas.visualizar", id=bolsa.id) }}')">
+        <td scope="col">{{ bolsa.nome }}</td>
         <td scope="col">{{ bolsa.modalidade }}</td>
         <td scope="col">{{ bolsa.cargo }}</td>
       </tr>

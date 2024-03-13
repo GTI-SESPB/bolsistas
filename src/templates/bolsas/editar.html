@@ -12,6 +12,10 @@
   <div class="container-fluid my-4">
     <div class="row mt-2">
       <div class="col">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" name="nome" class="form-control" value="{{ bolsa.nome }}" required>
+      </div>
+      <div class="col">
         <label for="modalidade" class="form-label">Modalidade</label>
         <input type="text" name="modalidade" class="form-control" value="{{ bolsa.modalidade }}" required>
       </div>
@@ -19,12 +23,19 @@
         <label for="cargo" class="form-label">Cargo</label>
         <input type="text" name="cargo" class="form-control" value="{{ bolsa.cargo }}" required>
       </div>
-      <div class="col col-3">
-        <label for="carga_horaria" class="form-label">Carga horária (Hora/semana)</label>
-        <input type="text" name="carga_horaria" class="form-control" value="{{ bolsa.carga_horaria }}" onkeyup="limitarANumeros(event)" required>
-      </div>
     </div>
     <div class="row mt-2">
+      <div class="col col-3">
+        <label for="carga_horaria" class="form-label">Carga horária (Hora/semana)</label>
+        <input
+          type="text"
+          name="carga_horaria"
+          class="form-control"
+          value="{{ bolsa.carga_horaria }}"
+          onkeyup="limitarANumeros(event)"
+          required
+        >
+      </div>
       <div class="col col-3">
         <label for="valor" class="form-label">Valor</label>
         <input type="text" name="valor" class="form-control" value="{{ bolsa.valor }}" required>
