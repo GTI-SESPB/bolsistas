@@ -1,0 +1,25 @@
+services:
+  app:
+    image: bolsas-esp:latest
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: ["sh", "start.sh"]
+    restart: on-failure
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./migrations/versions:/app/migrations/versions
+
+  db:
+    extends:
+      file: docker/compose.db.yml
+      service: db
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:

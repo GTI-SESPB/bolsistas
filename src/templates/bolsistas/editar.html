@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Adicionar bolsista{% endblock title %}
+{% block title %}Editar bolsista{% endblock title %}
 
 {% block content %}
 <div class="my-4">
-  <h1>Adicionar bolsista</h1>
+  <h1>Editar bolsista</h1>
 </div>
-<form action='{{ url_for("bolsistas_routes.editar", id=bolsista.id) }}' method="put">
+<form action='{{ url_for("bolsistas.editar", id=bolsista.id) }}' method="post">
   <!-- Dados pessoais -->
   <div>
     <p>Dados pessoais</p>
@@ -26,25 +26,25 @@
     <div class="row mt-2">
       <div class="col">
         <label for="nome_mae" class="form-label">Nome da mãe</label> 
-        <input type="text" name="nome_mae" class="form-control" value="{{ bolsista.nome_mae }}"required>
+        <input type="text" name="nome_mae" class="form-control" value="{{ bolsista.nome_mae }}" required>
       </div>
       <div class="col col-4">
         <label for="nascimento" class="form-label">Data de nascimento</label> 
-        <input type="date" name="nascimento" class="form-control" value="{{ bolsista.nascimento }}"required>
+        <input type="date" name="nascimento" class="form-control" value="{{ bolsista.nascimento }}" required>
       </div>
     </div>
     <div class="row mt-2">
       <div class="col">
         <label for="rg" class="form-label">RG</label>
-        <input type="text" name="rg" class="form-control" value="{{ bolsista.rg }}"required>
+        <input type="text" name="rg" class="form-control" value="{{ bolsista.rg }}" onkeyup="limitarANumeros(event)" required>
       </div>
       <div class="col">
         <label for="cpf" class="form-label">CPF</label> 
-        <input type="text" name="cpf" class="form-control" value="{{ bolsista.cpf }}" required>
+        <input type="text" name="cpf" class="form-control" maxlength="14" value="{{ bolsista.cpf }}" onkeyup="mascaraCPF(event)" required>
       </div>
       <div class="col">
         <label for="pis_pasep" class="form-label">PIS/PASEP</label>
-        <input type="text" name="pis_pasep" class="form-control" value="{{ bolsista.pis_pasep }}" required>
+        <input type="text" name="pis_pasep" class="form-control" value="{{ bolsista.pis_pasep }}" onkeyup="limitarANumeros(event)" required>
       </div>
     </div>
     <div class="row mt-3">
@@ -61,7 +61,7 @@
     <div class="row mt-2">
       <div class="col col-3">
         <label for="cep" class="form-label">CEP</label> 
-        <input type="text" name="cep" class="form-control" value="{{ bolsista.cep }}" required>
+        <input type="text" name="cep" class="form-control" value="{{ bolsista.cep }}" onkeyup="mascaraCEP(event)" required>
       </div>
       <div class="col">
         <label for="logradouro" class="form-label">Logradouro</label>
@@ -71,7 +71,7 @@
     <div class="row mt-2">
       <div class="col">
         <label for="numero" class="form-label">Número</label>
-        <input type="number" name="numero" class="form-control" value="{{ bolsista.numero }}" required>
+        <input type="text" name="numero" class="form-control" value="{{ bolsista.numero }}" onkeyup="limitarANumeros(event)" required>
       </div>
       <div class="col">
         <label for="cidade" class="form-label">Cidade</label>
@@ -83,38 +83,19 @@
       </div>
     </div>
   </div>
-  <p>Dados da Bolsa</p>
-  <hr>
-  <!-- Dados da bolsa -->
-  <div class="container-fluid my-4">
-    <div class="row mt-2">
-      <div class="col">
-        <label for="modalidade" class="form-label">Modalidade</label>
-        <input type="text" name="modalidade" class="form-control" value="{{ bolsista.modalidade }}" required>
-      </div>
-      <div class="col">
-        <label for="cargo" class="form-label">Cargo</label>
-        <input type="text" name="cargo" class="form-control" value="{{ bolsista.cargo }}" required>
-      </div>
-      <div class="col col-2">
-        <label for="carga_horaria" class="form-label">Carga horária</label>
-        <input type="number" name="carga_horaria" class="form-control" value="{{ bolsista.carga_horaria }}" required>
-      </div>
-    </div>
-    <div class="row mt-2">
-      <div class="col col-3">
-        <label for="valor" class="form-label">Valor</label>
-        <input type="number" name="valor" class="form-control" value="{{ bolsista.valor }}" required>
-      </div>
-    </div>
-  </div>
   <hr>
   <div class="container-fluid mt-4">
     <div class="row justify-content-md-center">
+      <div class="col col-2 d-grid">
+        <a href="{{ url_for('bolsistas.visualizar', id=bolsista.id) }}" class="btn btn-secondary">
+          Cancelar
+        </a>
+      </div>
       <div class="col col-2 d-grid">
         <button type="submit" class="btn btn-primary btn-adicionar">Salvar</button>
       </div>
     </div>
   </div>
 </form> 
+<script src="{{ url_for('static', filename='js/bolsistas.js' ) }}"></script>
 {% endblock content %}

@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:14-alpine
+    restart: always
+    user: postgres
+    environment:
+      POSTGRES_PASSWORD: ${PG_PASSWD:-postgres}
+      POSTGRES_DB: ${PG_DB:-bolsistas}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 20s
+      retries: 3
+      start_period: 10s
+

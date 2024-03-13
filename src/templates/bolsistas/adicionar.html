@@ -6,7 +6,7 @@
 <div class="my-4">
   <h1>Adicionar bolsista</h1>
 </div>
-<form action='{{ url_for("bolsistas_routes.adicionar_bolsista") }}' method="post">
+<form action='{{ url_for("bolsistas.adicionar") }}' method="post">
   <!-- Dados pessoais -->
   <div>
     <p>Dados pessoais</p>
@@ -36,15 +36,15 @@
     <div class="row mt-2">
       <div class="col">
         <label for="rg" class="form-label">RG</label>
-        <input type="text" name="rg" class="form-control" required>
+        <input type="text" name="rg" class="form-control" onkeyup="limitarANumeros(event)" required>
       </div>
       <div class="col">
         <label for="cpf" class="form-label">CPF</label> 
-        <input type="text" name="cpf" class="form-control" required>
+        <input type="text" name="cpf" class="form-control" maxlength="14" onkeyup="mascaraCPF(event)" required>
       </div>
       <div class="col">
         <label for="pis_pasep" class="form-label">PIS/PASEP</label>
-        <input type="text" name="pis_pasep" class="form-control" required>
+        <input type="text" name="pis_pasep" class="form-control" onkeyup="limitarANumeros(event)" required>
       </div>
     </div>
     <div class="row mt-3">
@@ -61,7 +61,7 @@
     <div class="row mt-2">
       <div class="col col-3">
         <label for="cep" class="form-label">CEP</label> 
-        <input type="text" name="cep" class="form-control" required>
+        <input type="text" name="cep" class="form-control" maxlength="9" onkeyup="mascaraCEP(event)" required>
       </div>
       <div class="col">
         <label for="logradouro" class="form-label">Logradouro</label>
@@ -71,7 +71,7 @@
     <div class="row mt-2">
       <div class="col">
         <label for="numero" class="form-label">Número</label>
-        <input type="number" name="numero" class="form-control" required>
+        <input type="text" name="numero" class="form-control" onkeyup="limitarANumeros(event)" required>
       </div>
       <div class="col">
         <label for="cidade" class="form-label">Cidade</label>
@@ -83,31 +83,6 @@
       </div>
     </div>
   </div>
-  <p>Dados da Bolsa</p>
-  <hr>
-  <!-- Dados da bolsa -->
-  <div class="container-fluid my-4">
-    <div class="row mt-2">
-      <div class="col">
-        <label for="modalidade" class="form-label">Modalidade</label>
-        <input type="text" name="modalidade" class="form-control" required>
-      </div>
-      <div class="col">
-        <label for="cargo" class="form-label">Cargo</label>
-        <input type="text" name="cargo" class="form-control" required>
-      </div>
-      <div class="col col-2">
-        <label for="carga_horaria" class="form-label">Carga horária</label>
-        <input type="number" name="carga_horaria" class="form-control" required>
-      </div>
-    </div>
-    <div class="row mt-2">
-      <div class="col col-3">
-        <label for="valor" class="form-label">Valor</label>
-        <input type="number" name="valor" class="form-control" required>
-      </div>
-    </div>
-  </div>
   <hr>
   <div class="container-fluid mt-4">
     <div class="row justify-content-md-center">
@@ -116,5 +91,6 @@
       </div>
     </div>
   </div>
-</form> 
+</form>
+<script src="{{ url_for('static', filename='js/bolsistas.js' ) }}"></script>
 {% endblock content %}

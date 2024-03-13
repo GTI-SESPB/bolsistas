@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block title %}Visualizar bolsista{% endblock title %}
+
+{% block content %}
+<div class="my-4">
+  <h1>Visualizar bolsista</h1>
+</div>
+<div>
+  <!-- Dados pessoais -->
+  <div>
+    <p>Dados pessoais</p>
+    <hr>
+  </div>
+  <div class="container-fluid mt-2 my-5">
+    <div class="row">
+      <div class="col">
+        <label for="nome" class="form-label">Nome</label> 
+        <input type="text" name="nome" class="form-control" value="{{ bolsista.nome }}" disabled readonly>
+      </div>
+      <div class="col col-4">
+        <label for="email" class="form-label">E-mail</label> 
+        <input type="email" name="email" class="form-control" value="{{ bolsista.email }}" disabled readonly>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <label for="nome_mae" class="form-label">Nome da mãe</label> 
+        <input type="text" name="nome_mae" class="form-control" value="{{ bolsista.nome_mae }}" disabled readonly>
+      </div>
+      <div class="col col-4">
+        <label for="nascimento" class="form-label">Data de nascimento</label> 
+        <input type="date" name="nascimento" class="form-control" value="{{ bolsista.nascimento }}" disabled readonly>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <label for="rg" class="form-label">RG</label>
+        <input type="text" name="rg" class="form-control" value="{{ bolsista.rg }}" disabled readonly>
+      </div>
+      <div class="col">
+        <label for="cpf" class="form-label">CPF</label> 
+        <input type="text" name="cpf" class="form-control" value="{{ bolsista.cpf }}" disabled readonly>
+      </div>
+      <div class="col">
+        <label for="pis_pasep" class="form-label">PIS/PASEP</label>
+        <input type="text" name="pis_pasep" class="form-control" value="{{ bolsista.pis_pasep }}" disabled readonly>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col col-5">
+        <label for="dados_bancarios" class="form-label">Dados Bancários</label>
+        <input type="text" name="dados_bancarios" class="form-control" value="{{ bolsista.dados_bancarios }}" disabled readonly>
+      </div>  
+    </div>
+  </div>
+  <p>Endereço</p>
+  <hr>
+  <!-- Dados de endereço -->
+  <div class="container-fluid my-4">
+    <div class="row mt-2">
+      <div class="col col-3">
+        <label for="cep" class="form-label">CEP</label> 
+        <input type="text" name="cep" class="form-control" value="{{ bolsista.cep }}" disabled readonly>
+      </div>
+      <div class="col">
+        <label for="logradouro" class="form-label">Logradouro</label>
+        <input type="text" name="logradouro" class="form-control" value="{{ bolsista.logradouro }}" disabled readonly>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col">
+        <label for="numero" class="form-label">Número</label>
+        <input type="editar" name="numero" class="form-control" value="{{ bolsista.numero }}" disabled readonly>
+      </div>
+      <div class="col">
+        <label for="cidade" class="form-label">Cidade</label>
+        <input type="text" name="cidade" class="form-control" value="{{ bolsista.cidade }}" disabled readonly>
+      </div>
+      <div class="col">
+        <label for="complemento" class="form-label">Complemento(Opcional)</label>
+        <input type="text" name="complemento" class="form-control" value="{{ bolsista.complemento }}" disabled readonly>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="container-fluid mt-4">
+    <div class="row justify-content-md-center">
+      <div class="col col-2 d-grid">
+        <a href="{{ url_for('bolsistas.editar', id=bolsista.id) }}" class="btn btn-primary">
+          Editar Bolsista
+        </a>
+      </div>
+      <div class="col col-2 d-grid">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+          Apagar Bolsista
+        </button>
+      </div> 
+    </div>
+  </div>
+</div> 
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Apagar Bolsista</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja apagar este bolsista?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancelar</button>
+        <a href="{{ url_for('bolsistas.deletar', id=bolsista.id) }}">
+          <button type="button" class="btn btn-danger">Apagar</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mt-5">
+  <h2>Situação</h2>
+  <div class="row mt-3">
+    <div class="col">
+      <p>
+        <span class="fw-bold">Ativo:</span> {% if bolsista.bolsa_ativa %}Sim{% else %}Não{% endif %}
+      </p>     
+    </div>
+    <div class="col">
+      <p>
+        <span class="fw-bold">Cargo:</span> {% if bolsista.bolsa_ativa %}{{ bolsista.bolsa_atual }}{% else %}-{% endif %}
+      </p>  
+    </div>
+  </div>
+</div>
+<div class="mt-5">
+  <h2>Histórico de bolsas</h2>
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th scope="col">MODALIDADE</th>
+        <th scope="col">CARGO</th>
+        <th scope="col">ATIVO</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for bolsa in bolsas %}
+      <tr>
+        <td scope="col">{{ bolsa.bolsa.modalidade }}</td>
+        <td scope="col">{{ bolsa.bolsa.cargo }}</td>
+        <td scope="col">
+          {% if bolsa.ativa %}sim{% else %}não{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<!-- dados da bolsa -->
+{% endblock content %}

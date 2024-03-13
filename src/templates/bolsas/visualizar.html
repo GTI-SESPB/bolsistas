@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Visualizar bolsa{% endblock title %}
+
+{% block content %}
+<div class="my-4">
+  <h1>Visualizar bolsa</h1>
+</div>
+<div>
+  <!-- Dados pessoais -->
+  <hr>
+  <div class="container-fluid my-4">
+    <div class="row mt-2">
+      <div class="col">
+        <label for="modalidade" class="form-label">Modalidade</label>
+        <input type="text" name="modalidade" class="form-control" value="{{ bolsa.modalidade }}" disabled readonly>
+      </div>
+      <div class="col">
+        <label for="cargo" class="form-label">Cargo</label>
+        <input type="text" name="cargo" class="form-control" value="{{ bolsa.cargo }}" disabled readonly>
+      </div>
+      <div class="col col-2">
+        <label for="carga_horaria" class="form-label">Carga horária</label>
+        <input type="text" name="carga_horaria" class="form-control" value="{{ bolsa.carga_horaria }}" disabled readonly>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col col-3">
+        <label for="valor" class="form-label">Valor</label>
+        <input type="text" name="valor" class="form-control" value="{{ bolsa.valor }}" disabled readonly>
+      </div>
+      <div class="col col-3">
+        <label for="edital_id" class="form-label">Edital</label> 
+        <input type="text" name="edital_id" class="form-control" value="{{ bolsa.edital.numero }}" disabled readonly>
+        </select>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="container-fluid mt-4">
+    <div class="row justify-content-md-center">
+      <div class="col col-2 d-grid">
+        <a href="{{ url_for('bolsas.editar', id=bolsa.id) }}" class="btn btn-primary">
+          Editar Bolsa
+        </a>
+      </div>
+      <div class="col col-2 d-grid">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+          Apagar Bolsa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mt-5">
+  <h2>Bolsistas vinculados</h2>
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th scope="col">NOME</th>
+        <th scope="col">CPF</th>
+        <th scope="col">BOLSA ATIVA</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for bolsista in bolsa.bolsistas %}
+      <tr style="cursor: pointer;" onclick="redirecionar('{{ url_for("bolsistas.visualizar", id=bolsista.bolsista.id) }}')">
+        <td scope="col">{{ bolsista.bolsista.nome }}</td>
+        <td scope="col">{{ bolsista.bolsista.cpf }}</td>
+        <td scope="col">{{ bolsista.bolsista.bolsa_ativa }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Apagar Bolsa</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja apagar esta bolsa?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancelar</button>
+        <a href="{{ url_for('bolsas.deletar', id=bolsa.id)}}">
+          <button type="button" class="btn btn-danger">Apagar</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
