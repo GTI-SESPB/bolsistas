@@ -135,13 +135,9 @@
   <div class="row mt-3">
     <div class="col col-3">
       {% if bolsista.bolsa_ativa %}
-      <button
-        type="button"
-        class="btn btn-danger"
-        onclick="desativarBolsa(`{{ url_for('bolsistas.desativar_bolsa', id=bolsista.id)}}`)"
-      >
-        Desativar Bolsa
-      </button> 
+      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#desativarBolsaModal">
+        Apagar Bolsista
+      </button>
       {% else %}
       <a href="#" class="btn btn-primary">Adicionar Bolsa</a>
       {% endif %}
@@ -161,7 +157,7 @@
     </thead>
     <tbody>
       {% for bolsa in bolsista.bolsas %}
-      <tr>
+      <tr style="cursor: pointer;" onclick="redirecionar('{{ url_for("bolsas.visualizar", id=bolsa.bolsa.id) }}')">
         <td scope="col">{{ bolsa.bolsa.nome }}</td>
         <td scope="col">{{ bolsa.bolsa.modalidade }}</td>
         <td scope="col">{{ bolsa.bolsa.cargo }}</td>
@@ -172,6 +168,29 @@
       {% endfor %}
     </tbody>
   </table>
+</div>
+<div class="modal fade" id="desativarBolsaModal" tabindex="-1" aria-labelledby="desativarBolsaModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Desativar Bolsa</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja desativar esta bolsa?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancelar</button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          onclick="desativarBolsa(`{{ url_for('bolsistas.desativar_bolsa', id=bolsista.id)}}`)"
+        >
+          Desativar Bolsa
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 <script src="{{ url_for('static', filename='js/bolsistas.js' ) }}"></script>
 {% endblock content %}
