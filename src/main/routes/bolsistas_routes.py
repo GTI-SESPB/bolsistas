@@ -5,7 +5,7 @@ from flask.views import MethodView
 from sqlalchemy import select, update
 
 from ..database import db
-from ..models import Bolsista
+from ..models import Bolsista, Bolsa, RelacaoBolsaBolsista
 from ..utils import class_route, dado_foi_deletado
 
 
@@ -22,14 +22,25 @@ class Listar(MethodView):
 @class_route(bolsistas_bp, '/bolsistas/adicionar', 'adicionar')
 class Adicionar(MethodView):
     def get(self):
-        return render_template('bolsistas/adicionar.html')
+        bolsas = db.session.execute(select(Bolsa).where(Bolsa.data_deletado.is_(None))).scalars()
+        return render_template('bolsistas/adicionar.html', bolsas=bolsas)
 
     def post(self):
+        bolsa_id = None
         form = dict(request.form)
         form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d') # type: ignore
+        if form['bolsa_id']:
+            bolsa_id = form.pop('bolsa_id')
         bolsista = Bolsista(**form)
         db.session.add(bolsista)
         db.session.commit()
+        if bolsa_id:
+            rl_bolsa = RelacaoBolsaBolsista(
+                bolsista_id=bolsista.id,
+                bolsa_id=bolsa_id
+            )
+            db.session.add(rl_bolsa)
+            db.session.commit()
         return redirect(url_for('bolsistas.visualizar', id=bolsista.id))
 
 
@@ -55,7 +66,7 @@ class Editar(MethodView):
     def post(self, id: int):
         form = dict(request.form)
         form['nascimento'] = datetime.strptime(form['nascimento'], '%Y-%m-%d') # type: ignore
-        dado_foi_deletado(db.session.execute(select(Bolsista).where(Bolsista.id == id)).scalar())       
+        dado_foi_deletado(db.session.execute(select(Bolsista).where(Bolsista.id == id)).scalar())
         db.session.execute(update(Bolsista).where(Bolsista.id == id).values(**form))
         db.session.commit()
         return redirect(url_for('bolsistas.visualizar', id=form['id']))
@@ -64,10 +75,22 @@ class Editar(MethodView):
 @class_route(bolsistas_bp, '/bolsistas/deletar/<int:id>', 'deletar')
 class Deletar(MethodView):
     def get(self, id: int):
-        dado_foi_deletado(db.session.execute(select(Bolsista).where(Bolsista.id == id)).scalar())       
+        dado_foi_deletado(db.session.execute(select(Bolsista).where(Bolsista.id == id)).scalar())
         db.session.execute(update(Bolsista).where(Bolsista.id == id).values(data_deletado=datetime.utcnow()))
         db.session.commit()
         return redirect(url_for('bolsistas.listar'))
+
+
+@class_route(bolsistas_bp, '/bolsistas/desativar_bolsa/<int:id>', 'desativar_bolsa')
+class DesativarBolsa(MethodView):
+    def post(self, id: int):
+        dado_foi_deletado(db.session.execute(select(Bolsista).where(Bolsista.id == id)).scalar())
+        db.session.execute(
+            update(RelacaoBolsaBolsista).where(RelacaoBolsaBolsista.bolsista_id == id)
+            .values(ativa=False)
+        )
+        db.session.commit()
+        return redirect(url_for('bolsistas.visualizar', id=id))
 
 
 @class_route(bolsistas_bp, '/', 'home')

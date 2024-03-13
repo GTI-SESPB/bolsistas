@@ -11,3 +11,5 @@ def class_route(self, rule, endpoint, **options):
 def dado_foi_deletado(dado):
     if dado is None or dado.data_deletado is not None:
         abort(404)
+
+    return dado

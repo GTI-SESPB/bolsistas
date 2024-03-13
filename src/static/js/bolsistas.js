@@ -29,3 +29,9 @@ const getEndereco = (cep) => {
     })
 }
 
+const desativarBolsa = (url) => {
+  fetch(url, { method: 'POST' })
+    .then(response => {
+      redirecionar(response.url)
+    })
+}

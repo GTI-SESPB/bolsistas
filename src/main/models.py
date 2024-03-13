@@ -53,6 +53,11 @@ class RelacaoBolsaBolsista(db.Model):
     bolsista: Mapped["Bolsista"] = relationship(back_populates="bolsas")
     bolsa: Mapped["Bolsa"] = relationship(back_populates="bolsistas")
 
+    def __init__(self, bolsista_id, bolsa_id, ativa=True):
+        self.bolsista_id = bolsista_id
+        self.bolsa_id = bolsa_id
+        self.ativa = ativa
+
 
 class Bolsa(db.Model):
     __tablename__ = "bolsa"
@@ -67,6 +72,9 @@ class Bolsa(db.Model):
     bolsistas: Mapped[List["RelacaoBolsaBolsista"]] = relationship(back_populates="bolsa")
     edital: Mapped["Edital"] = relationship(back_populates="bolsas")
     data_deletado: Mapped[Optional[datetime]]
+
+    def __repr__(self) -> str:
+        return self.nome
 
 
 class Edital(db.Model):
