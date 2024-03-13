@@ -58,6 +58,7 @@ class Bolsa(db.Model):
     __tablename__ = "bolsa"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    nome: Mapped[str]
     modalidade: Mapped[str]
     carga_horaria: Mapped[int]
     cargo: Mapped[str]
@@ -72,6 +73,7 @@ class Edital(db.Model):
     __tablename__ = "edital"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    nome: Mapped[str]
     numero: Mapped[str]
     data_assinatura: Mapped[date]
     duracao: Mapped[str]
