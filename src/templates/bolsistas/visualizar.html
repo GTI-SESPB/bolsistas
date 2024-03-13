@@ -139,7 +139,7 @@
         Apagar Bolsista
       </button>
       {% else %}
-      <a href="#" class="btn btn-primary">Adicionar Bolsa</a>
+      <a href="{{ url_for('bolsistas.adicionar_bolsa', id=bolsista.id) }}" class="btn btn-primary">Adicionar Bolsa</a>
       {% endif %}
     </div>
   </div>

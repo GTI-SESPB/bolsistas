@@ -93,6 +93,24 @@ class DesativarBolsa(MethodView):
         return redirect(url_for('bolsistas.visualizar', id=id))
 
 
+@class_route(bolsistas_bp, '/bolsistas/adicionar_bolsa/<int:id>', 'adicionar_bolsa')
+class AdicionarBolsa(MethodView):
+    def get(self, id: int):
+        dado_foi_deletado(db.session.execute(select(Bolsista).where(Bolsista.id == id)).scalar())
+        bolsas = db.session.execute(select(Bolsa).where(Bolsa.data_deletado.is_(None))).scalars()
+        return render_template('bolsistas/adicionar_bolsa.html', bolsas=bolsas, bolsista_id=id)
+
+    def post(self, id: int):
+        dado_foi_deletado(db.session.execute(select(Bolsista).where(Bolsista.id == id)).scalar())
+        rl_bolsa = RelacaoBolsaBolsista(
+            bolsa_id=request.form['bolsa_id'],
+            bolsista_id=id
+        )
+        db.session.add(rl_bolsa)
+        db.session.commit()
+        return redirect(url_for('bolsistas.visualizar', id=id))
+
+
 @class_route(bolsistas_bp, '/', 'home')
 class Home(MethodView):
     def get(self):

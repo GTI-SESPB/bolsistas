@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Adicionar Bolsa{% endblock title %}
+
+{% block content %}
+<div class="my-4">
+  <h1>Adicionar bolsa</h1>
+</div>
+<form action='{{ url_for("bolsistas.adicionar_bolsa", id=bolsista_id) }}' method="post">
+  <div class="container-fluid my-4">
+    <div class="row mt-2">
+      <div class="col col-3">
+        <label for="bolsa_id" class="form-label">Bolsa ativa</label>
+        <select class="form-select" name="bolsa_id">
+          <option value="#" selected disabled>Selecionar...</option>
+          {% for bolsa in bolsas %}
+          <option value="{{ bolsa.id }}">{{ bolsa.nome }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid mt-4">
+    <div class="row">
+      <div class="col col-2">
+        <button type="submit" class="btn btn-primary btn-adicionar">Adicionar</button>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock content %}
