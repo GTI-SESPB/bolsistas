@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask import Blueprint, redirect, render_template, request, url_for
 from flask.views import MethodView
-from sqlalchemy import select, update
+from sqlalchemy import or_, select, update
 
 from ..database import db
 from ..models import Bolsista, Bolsa, RelacaoBolsaBolsista
@@ -15,7 +15,14 @@ bolsistas_bp = Blueprint('bolsistas', __name__)
 @class_route(bolsistas_bp, '/bolsistas', 'listar')
 class Listar(MethodView):
     def get(self):
-        bolsistas = db.session.execute(select(Bolsista).where(Bolsista.data_deletado.is_(None))).scalars()
+        smt = select(Bolsista).where(Bolsista.data_deletado.is_(None))
+        if (pesquisa := request.args.get('pesquisa')):
+            smt = smt.where(or_(
+                Bolsista.cpf.ilike(f'%{pesquisa}%'),
+                Bolsista.nome.ilike(f'%{pesquisa.upper()}%')
+            ))
+
+        bolsistas = db.session.execute(smt).scalars()
         return render_template('bolsistas/listar.html', bolsistas=bolsistas)
 
 
