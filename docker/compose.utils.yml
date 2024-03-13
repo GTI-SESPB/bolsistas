@@ -4,3 +4,5 @@ services:
     command: ["python", "-m", "flask", "-A", "src.wsgi:app", "db", "migrate"]
     volumes:
       - ./migrations/versions:/app/migrations/versions
+    depends_on:
+      - db
