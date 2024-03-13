@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col">
         <label for="nome" class="form-label">Nome</label> 
-        <input type="text" name="nome" class="form-control" required>
+        <input type="text" name="nome" class="form-control" onkeyup="apenasMaiusculas(event)" required>
       </div>
       <div class="col col-4">
         <label for="email" class="form-label">E-mail</label> 
@@ -26,7 +26,7 @@
     <div class="row mt-2">
       <div class="col">
         <label for="nome_mae" class="form-label">Nome da mãe</label> 
-        <input type="text" name="nome_mae" class="form-control" required>
+        <input type="text" name="nome_mae" class="form-control" onkeyup="apenasMaiusculas(event)" required>
       </div>
       <div class="col col-4">
         <label for="nascimento" class="form-label">Data de nascimento</label> 

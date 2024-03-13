@@ -3,6 +3,11 @@ const apenasNumeros = (value) => {
   return value.replace(/\D/g, '');
 }
 
+const apenasMaiusculas = (e) => {
+  let input = e.target;
+  input.value = input.value.toUpperCase();
+}
+
 const limitarANumeros = (e) => {
   let input = e.target;
   input.value = apenasNumeros(input.value)
@@ -11,3 +16,4 @@ const limitarANumeros = (e) => {
 function redirecionar(url) {
   window.location = url
 }
+

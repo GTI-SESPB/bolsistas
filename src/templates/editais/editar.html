@@ -13,15 +13,15 @@
     <div class="row mt-2">
       <div class="col">
         <label for="nome" class="form-label">Nome</label>
-        <input type="text" name="nome" class="form-control" value="{{ edital.nome }}" required>
+        <input type="text" name="nome" class="form-control" value="{{ edital.nome }}" onkeyup="apenasMaiusculas(event)" required>
       </div>
       <div class="col">
         <label for="numero" class="form-label">Número</label>
-        <input type="text" name="numero" class="form-control" value="{{ edital.numero }}" required>
+        <input type="text" name="numero" class="form-control" value="{{ edital.numero }}" onkeyup="limitarANumeros(event)" required>
       </div>
       <div class="col">
         <label for="nucleo_responsavel" class="form-label">Núcleo Responsável</label>
-        <input type="text" name="nucleo_responsavel" class="form-control" value="{{ edital.nucleo_responsavel }}" required>
+        <input type="text" name="nucleo_responsavel" class="form-control" value="{{ edital.nucleo_responsavel }}" onkeyup="apenasMaiusculas(event)" required>
       </div>
     </div>
     <div class="row mt-2">
