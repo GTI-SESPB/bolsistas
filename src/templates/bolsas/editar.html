@@ -19,9 +19,9 @@
         <label for="cargo" class="form-label">Cargo</label>
         <input type="text" name="cargo" class="form-control" value="{{ bolsa.cargo }}" required>
       </div>
-      <div class="col col-2">
-        <label for="carga_horaria" class="form-label">Carga horária</label>
-        <input type="text" name="carga_horaria" class="form-control" value="{{ bolsa.carga_horaria }}" required>
+      <div class="col col-3">
+        <label for="carga_horaria" class="form-label">Carga horária (Hora/semana)</label>
+        <input type="text" name="carga_horaria" class="form-control" value="{{ bolsa.carga_horaria }}" onkeyup="limitarANumeros(event)" required>
       </div>
     </div>
     <div class="row mt-2">
